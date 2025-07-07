@@ -1,0 +1,168 @@
+<?php
+require_once(__DIR__ . '/../banco.php');
+session_start();
+
+?>
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    
+    <style> 
+        .sidebar {
+        height: 100vh; 
+        background-color: #1c1c1c; 
+        color: white;
+        padding: 1rem;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        td {
+        border: 4px solid #333;
+        width: 200px;
+        }
+
+        thead,
+        tfoot {
+        background-color: #333;
+        color: #fff;
+        }
+
+        main {
+            flex: 1; 
+        }
+
+        .nav-link:hover {
+            color:rgb(6, 87, 248) !important; 
+        }
+
+        select {
+        color:#333 /* Cor da fonte dentro do select */
+        
+        }
+
+
+
+        .scFormPage .select2-container .select2-dropdown {
+            border-color:rgb(255, 255, 255) !important;
+        }
+
+        .select2-dropdown {
+            border-radius: 0 0 10px 10px !important;
+            overflow: hidden !important;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            border-color:rgb(255, 255, 255) ;
+            border-radius: 10px !important;
+        }
+
+
+
+    </style>
+
+
+
+</head>
+
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    </svg>
+    
+
+    <main class="d-flex flex-nowrap">
+        
+
+                    <div class="d-flex">
+                    <div class="sidebar d-flex flex-column p-3 text-white bg-dark" style="width: 250px; height: 100vh;">
+                        <h5>Sistema de invetario</h5>
+                        <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="/inventario/index.php" class="nav-link active">Home</a>
+                        </li>
+                        <li><a href="/inventario/views/produto/index.php" class="nav-link text-white">Produtos</a></li>
+                        <li><a href="/inventario/views/patrimonio/index.php" class="nav-link text-white">Patrimonio</a></li>
+                        <li><a href="/inventario/views/categoria/index.php" class="nav-link text-white">Categorias</a></li>
+                        <li><a href="/inventario/views/setor/index.php" class="nav-link text-white">Setores</a></li>
+                        </ul>
+                        <div class="mt-auto">
+
+                        <?php if (!empty($_SESSION['usuario'])){ ?>
+                            <div class="dropdown">
+
+                                    <?php
+                                    $usuario = $_SESSION['usuario'];
+
+                                    // Buscar a foto do usuário no banco
+                                    $stmt = $pdo->prepare("SELECT foto FROM tb_usuario WHERE usuario = :usuario");
+                                    $stmt->bindParam(':usuario', $usuario);
+                                    $stmt->execute();
+                                    $foto = $stmt->fetchColumn(); // Retorna só o valor da coluna
+
+                                    // Caminho padrão se não houver foto no banco
+                                    $foto_usuario = !empty($foto) ? $foto : '/inventario/images/avatar.png';
+                                    ?>
+
+                                    <a href=""
+                                    class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                                    <img src="<?php echo $foto_usuario; ?>" alt="" width="32" height="32" class="rounded-circle me-2">
+                                    <strong><?php echo htmlspecialchars($_SESSION['usuario']); ?></strong>
+                                    </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                    <li>
+                                        <a class="dropdown-item" href="#">New project...</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/inventario/views/user/perfil.php">Profile</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href='/inventario/functions/user/logout.php'>Sign out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php }else{ ?>
+                            <div class="text-center">
+                                <a href="/inventario/views/user/login.php" class="btn btn-primary btn-sm me-2">Login</a>
+                                <a href="/inventario/views/user/register.php" class="btn btn-warning btn-sm me-2">Registrar-se</a>
+                            </div>
+                        <?php }; ?>
+                        
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="content d-flex justify-content-center" style="flex: 1;">
+                        
+                    
+                
+
+                
+            
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
