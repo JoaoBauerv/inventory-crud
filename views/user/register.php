@@ -10,22 +10,32 @@ function post_data($field){
 define('REQUIRED_FIELD_ERROR', 'É necessario preencher esse campo!');
 $errors = [];
 
-$usuario = '';
+$nome = '';
+$sobrenome = '';
 $email = '';
 $senha = '';
 $senha2 = '';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-  $usuario = post_data('usuario');
+  $nome = post_data('nome');
+  $sobrenome = post_data('sobrenome');
   $email = post_data('email');
   $senha = post_data('senha');
   $senha2 = post_data('senha2');
+  
 
-  if (!$usuario){
-    $errors['usuario'] = REQUIRED_FIELD_ERROR;
-  }elseif(strlen($usuario) < 6 || strlen($usuario) > 16 ){
-    $errors['usuario'] = 'O usuário precisa ser entre 6 e 16 caracteres!';
+  if (!$nome){
+    $errors['nome'] = REQUIRED_FIELD_ERROR;
+  }elseif(strlen($nome) < 10 || strlen($nome) > 20 ){
+    $errors['nome'] = 'O nome precisa ser entre 3 e 20 caracteres!';
+  
+  }
+
+  if (!$sobrenome){
+    $errors['sobrenome'] = REQUIRED_FIELD_ERROR;
+  }elseif(strlen($sobrenome) < 3 || strlen($sobrenome) > 30 ){
+    $errors['sobrenome'] = 'O sobrenome precisa ser entre 3 e 30 caracteres!';
   
   }
 
@@ -64,13 +74,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       <img src="/caminho/para/logo.png" alt="Logo" style="max-height: 80px;" onerror="this.style.display='none'">
       <h3 class="mt-2 text-white">Registrar-se</h3>
     </div>
-
-    <form action="\inventario\functions\user\registrar.php" method="POST" enctype="multipart/form-data" >
+  <!-- \inventario\functions\user\registrar.php -->
+    <form action="" method="POST" enctype="multipart/form-data" >
         <div class="mb-3">
-            <label for="usuario" class="form-label text-white">Usuário</label>
-            <input type="text" class="form-control <?php echo isset($errors['usuario']) ? 'is-invalid' : '' ?>" id="usuario" name="usuario"  value="<?php echo $usuario ?>" >
+            <label for="nome" class="form-label text-white">Nome</label>
+            <input type="text" class="form-control <?php echo isset($errors['nome']) ? 'is-invalid' : '' ?>" id="nome" name="nome"  value="<?php echo $nome ?>" >
             <div class="invalid-feedback"> 
-              <?php echo $errors['usuario'] ?>
+              <?php echo $errors['nome'] ?>
+            </div>
+        </div>
+      
+        <div class="mb-3">
+            <label for="sobrenome" class="form-label text-white">Sobrenome</label>
+            <input type="text" class="form-control <?php echo isset($errors['sobrenome']) ? 'is-invalid' : '' ?>" id="sobrenome" name="sobrenome"  value="<?php echo $sobrenome ?>" >
+            <div class="invalid-feedback"> 
+              <?php echo $errors['sobrenome'] ?>
             </div>
         </div>
 

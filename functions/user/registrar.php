@@ -8,7 +8,18 @@ print_r($_POST);
 echo '</pre>';
 */
 
-    $usuario = $_POST['usuario'];
+    // Pega o nome completo do POST
+    $nomeCompleto = trim($_POST['nome'] ?? '');
+
+    // Separa em partes pelo espaço
+    $partes = preg_split('/\s+/', $nomeCompleto);
+
+    // Pega o primeiro e o último nome, se existirem
+    if (count($partes) > 1) {
+        $usuario = $partes[0] . '-' . $partes[count($partes) - 1];
+    } else {
+        $usuario = $nomeCompleto;
+    }
 
     //print_r($_FILES);
 
@@ -48,14 +59,15 @@ echo '</pre>';
 
 if (!empty($_POST)) {
     try {
-        $sql = "INSERT INTO tb_usuario (usuario, email, senha, foto) VALUES (:usuario, :email, :senha, :foto)";
+        $sql = "INSERT INTO tb_usuario (nome, email, senha, foto, usuario) VALUES (:nome, :email, :senha, :foto, :usuario)";
         $stmt = $pdo->prepare($sql);
 
         $dados = array(
-            ':usuario' => $_POST['usuario'],
+            ':nome' => $_POST['nome'],
             ':email' => $_POST['email'],
             ':senha' => password_hash($_POST['senha'], PASSWORD_DEFAULT),
-            ':foto' => $url_arquivo
+            ':foto' => $url_arquivo,
+            ':usuario'=> $usuario
         );
 
         if ($stmt->execute($dados)) {

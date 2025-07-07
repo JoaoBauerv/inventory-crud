@@ -5,24 +5,23 @@
 ?>
 
 
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column align-items-center gap-3" style="width: 100%; max-width: 500px;">
 
-            <?php
-            require_once 'components/alert.php';
-            ?>
+        <div class="w-100">
+            <?php require_once 'components/alert.php'; ?>
+        </div>
 
-            <main class="px-3">
+        <div class="card shadow-lg p-4 w-100">
+            <main class="px-3 text-center">
                 <h1>SEJA BEM VINDO!</h1>
-                <p class="lead">Esta site de inventario!</p>
+                <p class="lead">Este é o site de inventário!</p>
                 <p class="lead">
-                    <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white " >Saiba mais</a>
-                
-                
-
-                
-
+                    <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Saiba mais</a>
                 </p>
             </main>
-
         </div>
-    
+
+    </div>
+</div>
+

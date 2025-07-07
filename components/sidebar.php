@@ -2,6 +2,7 @@
 require_once(__DIR__ . '/../banco.php');
 session_start();
 
+//var_dump($dados_usuario);
 ?>
 
 <!DOCTYPE html>
@@ -93,37 +94,68 @@ session_start();
                     <div class="d-flex">
                     <div class="sidebar d-flex flex-column p-3 text-white bg-dark" style="width: 250px; height: 100vh;">
                         <h5>Sistema de invetario</h5>
-                        <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="/inventario/index.php" class="nav-link active">Home</a>
-                        </li>
-                        <li><a href="/inventario/views/produto/index.php" class="nav-link text-white">Produtos</a></li>
-                        <li><a href="/inventario/views/patrimonio/index.php" class="nav-link text-white">Patrimonio</a></li>
-                        <li><a href="/inventario/views/categoria/index.php" class="nav-link text-white">Categorias</a></li>
-                        <li><a href="/inventario/views/setor/index.php" class="nav-link text-white">Setores</a></li>
-                        </ul>
+                            <ul class="nav nav-pills flex-column mb-auto p-3 bg-dark text-white rounded shadow">
+                                <li class="nav-item mb-2">
+                                    <a href="/inventario/index.php" class="nav-link active text-white bg-primary">
+                                        Home
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="btn btn-outline-light w-100 text-start" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sidebarMenuLinks"
+                                            aria-expanded="false" aria-controls="sidebarMenuLinks">
+                                        Patrimonio
+                                    </button>
+
+                                    <div class="collapse mt-2" id="sidebarMenuLinks">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a href="/inventario/views/produto/index.php" class="nav-link text-white ps-4">Produtos</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/inventario/views/patrimonio/index.php" class="nav-link text-white ps-4">Patrimonio</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/inventario/views/categoria/index.php" class="nav-link text-white ps-4">Categorias</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/inventario/views/setor/index.php" class="nav-link text-white ps-4">Setores</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+
                         <div class="mt-auto">
 
                         <?php if (!empty($_SESSION['usuario'])){ ?>
                             <div class="dropdown">
 
                                     <?php
-                                    $usuario = $_SESSION['usuario'];
+                                        $usuario = $_SESSION['usuario'];
 
-                                    // Buscar a foto do usuário no banco
-                                    $stmt = $pdo->prepare("SELECT foto FROM tb_usuario WHERE usuario = :usuario");
-                                    $stmt->bindParam(':usuario', $usuario);
-                                    $stmt->execute();
-                                    $foto = $stmt->fetchColumn(); // Retorna só o valor da coluna
+                                        // Buscar todas as informações do usuário no banco
+                                        $stmt = $pdo->prepare("SELECT * FROM tb_usuario WHERE usuario = :usuario");
+                                        $stmt->bindParam(':usuario', $usuario);
+                                        $stmt->execute();
+                                        $dados_usuario = $stmt->fetch(PDO::FETCH_ASSOC); // $dados_usuario será um array associativo com os dados do usuário
 
-                                    // Caminho padrão se não houver foto no banco
-                                    $foto_usuario = !empty($foto) ? $foto : '/inventario/images/avatar.png';
+                                        // Buscar a foto do usuário no banco
+                                        $stmt = $pdo->prepare("SELECT foto FROM tb_usuario WHERE usuario = :usuario");
+                                        $stmt->bindParam(':usuario', $dados_usuario['usuario']);
+                                        $stmt->execute();
+                                        $foto = $stmt->fetchColumn(); // Retorna só o valor da coluna
+
+                                        // Caminho padrão se não houver foto no banco
+                                        $foto_usuario = !empty($foto) ? $foto : '/inventario/images/avatar.png';
+                                    
                                     ?>
 
                                     <a href=""
                                     class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                                     <img src="<?php echo $foto_usuario; ?>" alt="" width="32" height="32" class="rounded-circle me-2">
-                                    <strong><?php echo htmlspecialchars($_SESSION['usuario']); ?></strong>
+                                    <strong><?php echo htmlspecialchars($dados_usuario['nome']); ?></strong>
                                     </a>
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                                     <li>
