@@ -1,15 +1,19 @@
 <?php include __DIR__ . '/components/sidebar.php'; 
+      
 
 // var_dump($_SESSION['usuario']);
       
 ?>
 
 
+
 <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
     <div class="d-flex flex-column align-items-center gap-3" style="width: 100%; max-width: 500px;">
 
         <div class="w-100">
-            <?php require_once 'components/alert.php'; ?>
+            <?php require_once 'components/alert.php'; 
+            
+            ?>
         </div>
 
         <div class="card shadow-lg p-4 w-100">
