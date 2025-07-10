@@ -158,9 +158,11 @@ session_start();
                                     <strong><?php echo htmlspecialchars($dados_usuario['nome']); ?></strong>
                                     </a>
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <?php if (!empty($dados_usuario['admin'])){ ?>    
                                     <li>
-                                        <a class="dropdown-item" href="#">New project...</a>
+                                        <a class="dropdown-item" href="/inventario/views/user/admin.php">Admin</a>
                                     </li>
+                                <?php } ?> 
                                     <li>
                                         <a class="dropdown-item" href="#">Settings</a>
                                     </li>
