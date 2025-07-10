@@ -24,12 +24,14 @@ if(!empty($dados_usuario['admin'])){
       if ($rowCount > 0) {
           echo "<table class='table table-bordered table-striped'>";
           echo "<thead class='table-dark'>";
-          echo "<tr><th>Nome Usuario</th><th>Opções</th></tr>";
+          echo "<tr><th>Id</th><th>Usuario</th><th>Nome Usuario</th><th>Opções</th></tr>";
           echo "</thead>";
           echo "<tbody>";
 
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
               echo "<tr>";
+              echo "<td>" . htmlspecialchars($row["id_usuario"]) . "</td>";
+              echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
               echo "<td>" . htmlspecialchars($row["nome"]) . "</td>";
               echo "<td>";
               echo '<a href="edit.php?id=' . $row["id_usuario"] . '" class="btn btn-warning btn-sm me-2">Editar</a>';
